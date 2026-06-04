@@ -1,0 +1,24 @@
+{
+  "generated_at": "2026-06-04T21:59:47",
+  "model": "gemma3:4b",
+  "used_fallback": false,
+  "generation_strategy": "ollama_compact_draft_then_symbolic_pddl_compilation",
+  "generation_warnings": [],
+  "domain": "mythic_quest",
+  "quest_count": 3,
+  "files": [
+    "domain.pddl",
+    "generation_meta.json",
+    "prompt.txt",
+    "quest_01_quest-1.json",
+    "quest_01_quest-1.pddl",
+    "quest_01_quest-1.plan",
+    "quest_02_quest-2.json",
+    "quest_02_quest-2.pddl",
+    "quest_02_quest-2.plan",
+    "quest_03_quest-3.json",
+    "quest_03_quest-3.pddl",
+    "quest_03_quest-3.plan",
+    "series.json"
+  ]
+}
