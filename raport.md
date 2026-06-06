@@ -2,7 +2,7 @@
 
 **Autorzy:**
 
-- Paulina Hładki (nr indeksu: ___)
+- Paulina Hładki (151781)
 - Marta Jędrzejczak (151773)
 - Szymon Szymankiewicz (151821)
 - Dominik Maćkowiak (151915)
