@@ -1,4 +1,4 @@
-# Report: PDDL Quest Series Generator
+# Raport: Generator serii questów PDDL
 
 **Autorzy:**
 
@@ -7,30 +7,30 @@
 - Szymon Szymankiewicz (151821)
 - Dominik Maćkowiak (151915)
 
-## 1. Artifacts
+## 1. Artefakty
 
-The project contains the four required elements:
+Projekt zawiera cztery wymagane elementy:
 
-- Story generator code: `questgen/generator.py`, supported by `questgen/domain.py` and `questgen/pddl.py`.
-- Quest definition folder: `quests/generated/ash_bell/`.
-- Story playback code: `questgen/play.py`.
-- Project report: this file.
+- Kod generatora fabuł: `questgen/generator.py`, wspierany przez `questgen/domain.py` i `questgen/pddl.py`.
+- Folder z definicjami questów: `quests/generated/ash_bell/`.
+- Kod odgrywający fabuły: `questgen/play.py`.
+- Raport podsumowujący: ten dokument.
 
-The generated folder contains:
+Wygenerowany folder zawiera:
 
-- `domain.pddl` - the shared world domain.
-- `prompt.txt` - the original English prompt.
-- `series.json` - the full generated series.
-- `quest_01_quest-1.json`, `quest_02_quest-2.json`, `quest_03_quest-3.json` - quest descriptions, objects, NPCs, and dialogue.
-- `quest_01_quest-1.pddl`, `quest_02_quest-2.pddl`, `quest_03_quest-3.pddl` - planning problems.
-- `quest_*.plan` - plans verified by the local STRIPS solver.
-- `generation_meta.json` - generation metadata.
+- `domain.pddl` — wspólna domena świata.
+- `prompt.txt` — oryginalny angielski prompt.
+- `series.json` — pełna wygenerowana seria.
+- `quest_01_quest-1.json`, `quest_02_quest-2.json`, `quest_03_quest-3.json` — opisy questów, obiekty, NPC i dialogi.
+- `quest_01_quest-1.pddl`, `quest_02_quest-2.pddl`, `quest_03_quest-3.pddl` — problemy planowania.
+- `quest_*.plan` — plany zweryfikowane przez lokalny solver STRIPS.
+- `generation_meta.json` — metadane generacji.
 
-## 2. Generation Method
+## 2. Metoda generacji
 
-The method is hybrid. A local language model creates a compact dramatic seed, while deterministic symbolic code compiles that seed into JSON and PDDL. This avoids asking the model to write raw PDDL, which is fragile. The language model contributes title, premise, motifs, quest titles, summaries, and a twist. The generator then builds a validated quest structure with locations, items, NPCs, enemies, and steps.
+Metoda jest hybrydowa. Lokalny model językowy tworzy zwarty *dramatic seed*, podczas gdy deterministyczny kod symboliczny kompiluje ten seed do JSON i PDDL. Dzięki temu nie prosimy modelu o pisanie surowego PDDL, co jest zbyt kruche. Model językowy dostarcza tytuł, premise, motywy, tytuły questów, streszczenia i twist. Generator buduje następnie zweryfikowaną strukturę questów z lokacjami, przedmiotami, NPC, wrogami i krokami.
 
-The first attempt used `qwen3.6:latest`, but that model was too heavy for the laptop in this setup. It repeatedly timed out and also produced long thinking output before returning useful JSON. The final run uses the much smaller `gemma3:4b` model. It completed successfully:
+Pierwsza próba użyła modelu `qwen3.6:latest`, ale okazał się zbyt ciężki dla laptopa w tej konfiguracji. Wielokrotnie kończył się timeoutem i dodatkowo produkował długie myślenie przed zwróceniem użytecznego JSON. Finalne uruchomienie używa znacznie mniejszego modelu `gemma3:4b`. Ukończyło się ono pomyślnie:
 
 ```json
 {
@@ -40,15 +40,15 @@ The first attempt used `qwen3.6:latest`, but that model was too heavy for the la
 }
 ```
 
-The generator still supports three modes:
+Generator wspiera trzy tryby:
 
-- `compact` - default mode; asks the LLM for a short dramatic seed, then compiles it symbolically.
-- `full` - experimental mode; asks the LLM for a full quest schema.
-- `fallback` - deterministic English fallback used when the model is unavailable.
+- `compact` — domyślny; prosi LLM o krótki *dramatic seed*, a następnie kompiluje go symbolicznie.
+- `full` — eksperymentalny; prosi LLM o pełny schemat questu.
+- `fallback` — deterministyczny angielski fallback używany, gdy model jest niedostępny.
 
-## 3. Shared PDDL Domain
+## 3. Wspólna domena PDDL
 
-The shared domain uses these types:
+Wspólna domena używa typów:
 
 - `location`
 - `item`
@@ -57,7 +57,7 @@ The shared domain uses these types:
 - `gate`
 - `stage`
 
-The STRIPS actions represent the actions available in the text game:
+Akcje STRIPS reprezentują działania dostępne w grze tekstowej:
 
 - `travel`
 - `take`
@@ -78,34 +78,34 @@ The STRIPS actions represent the actions available in the text game:
 - `brawl`
 - `use-healing-item`
 
-Each action has preconditions and effects. The intended narrative order is represented with stage predicates such as `current-stage`, `next-stage`, `travel-step`, `take-step`, `fight-step`, and `ritual-step`. This keeps the quest as a planning problem while preventing the solver from skipping the intended story beat order. The `examine-*` actions add optional inspection choices. The consequence actions add decisions with state changes: hidden routes can be revealed, optional items can be taken, NPCs can be provoked, optional enemies can become hostile, brawls can wound the player, and healing items can remove the wound.
+Każda akcja ma *preconditions* i *effects*. Zamierzona kolejność narracyjna jest reprezentowana przez predykaty stage takie jak `current-stage`, `next-stage`, `travel-step`, `take-step`, `fight-step` i `ritual-step`. Dzięki temu quest pozostaje problemem planowania, a solver nie może pominąć zamierzonej kolejności fabularnej. Akcje `examine-*` dodają opcjonalne wybory inspekcji. Akcje konsekwencji dodają decyzje ze zmianami stanu: ukryte ścieżki mogą zostać odkryte, opcjonalne przedmioty mogą zostać podniesione, NPC mogą zostać sprowokowani, opcjonalni wrogowie mogą stać się wrogo nastawieni, walki na pięści mogą zranić gracza, a przedmioty lecznicze mogą usunąć ranę.
 
-## 4. Repair and Verification
+## 4. Naprawa i weryfikacja
 
-The generator does not trust model output directly. It normalizes IDs, filters unsupported actions, adds missing objects, and compiles quest steps into initial PDDL facts.
+Generator nie ufa bezpośrednio wyjściu modelu. Normalizuje ID, filtruje nieobsługiwane akcje, dodaje brakujące obiekty i kompiluje kroki questów do początkowych faktów PDDL.
 
-The repair pass can:
+*Repair pass* może:
 
-- add missing locations, NPCs, items, enemies, and gates,
-- infer `start_location`,
-- add `path` facts for movement,
-- add `locked-gate` facts for locked passages,
-- add `hidden-route`, `optional-item`, `healing-item`, `provocation-open`, and `optional-enemy` facts for decision consequences,
-- infer carried items with `has(item)` when an item continues from a previous quest,
-- add fallback dialogue for NPCs,
-- compare the solver plan against the expected narrative plan.
+- dodać brakujące lokacje, NPC, przedmioty, wrogów i bramy,
+- wnioskować `start_location`,
+- dodać fakty `path` dla ruchu,
+- dodać fakty `locked-gate` dla zamkniętych przejść,
+- dodać fakty `hidden-route`, `optional-item`, `healing-item`, `provocation-open` i `optional-enemy` dla konsekwencji decyzji,
+- wnioskować niesione przedmioty przez `has(item)` gdy przedmiot przechodzi z poprzedniego questu,
+- dodać domyślne dialogi dla NPC,
+- porównać plan solvera z zamierzonym planem narracyjnym.
 
-Final verification:
+Finalna weryfikacja:
 
 ```text
-OK   quest_01_quest-1.pddl: 5 actions
-OK   quest_02_quest-2.pddl: 7 actions
-OK   quest_03_quest-3.pddl: 6 actions
+OK   quest_01_quest-1.pddl: 5 akcji
+OK   quest_02_quest-2.pddl: 7 akcji
+OK   quest_03_quest-3.pddl: 6 akcji
 ```
 
-## 5. Generated Series
+## 5. Wygenerowana seria
 
-Original prompt:
+Oryginalny prompt:
 
 ```text
 After years away, the hero returns to their childhood village and discovers
@@ -113,47 +113,47 @@ that an ancient bell beneath the mine is waking ash-born shadows.
 The story should feel like a dark fairy tale, but end with hope for the village.
 ```
 
-Generated series title:
+Wygenerowany tytuł serii:
 
 ```text
 Echoes of the Ashwood
 ```
 
-LLM-generated dramatic seed:
+Wygenerowany przez LLM *dramatic seed*:
 
 - Motifs: `loss`, `memory`, `corruption`
-- Twist: the shadows are not malevolent, but echoes of a forgotten pact made to protect the village from a far greater threat.
+- Twist: cienie nie są złośliwe, lecz echem zapomnianego paktu zawartego dla ochrony wioski przed znacznie większym zagrożeniem.
 
-Quest sequence:
+Sekwencja questów:
 
-1. `The Silent Toll` - the call to adventure; the hero speaks with Elder Mira, finds the rusted medallion, and takes the silver knife.
-2. `Beneath Blackstone` - the threshold; the hero gives the medallion to Iren the Cartographer, obtains the vein map and key, and opens the mine gate.
-3. `The Bloom of Remembrance` - the ordeal and return; the hero defeats the ash guardian, listens to the bellkeeper's shade, retrieves the bell heart, and performs the rite of silence.
+1. `The Silent Toll` — wezwanie do przygody; bohater rozmawia z Elder Mirą, znajduje zardzewiały medalion i bierze srebrny nóż.
+2. `Beneath Blackstone` — próg; bohater daje medalion Iren Kartografce, zdobywa mapę żył i klucz, i otwiera bramę kopalni.
+3. `The Bloom of Remembrance` — próba i powrót; bohater pokonuje strażnika popiołu, słucha upiora dzwonnika, zdobywa serce dzwonu i wykonuje rytuał ciszy.
 
-## 6. Multi-Prompt Experiment
+## 6. Eksperyment Multi-Prompt
 
-To test the robustness of the generator, three different English prompts were fed to the `gemma3:4b` model. Two runs used the default `compact` mode, and one used the experimental `full` mode. All outputs were verified by the local STRIPS solver and then played through automatically with the text player.
+Aby przetestować odporność generatora, trzy różne angielskie prompty zostały przekazane modelowi `gemma3:4b`. Dwa uruchomienia użyły domyślnego trybu `compact`, a jedno eksperymentalnego trybu `full`. Wszystkie wyniki zostały zweryfikowane przez lokalny solver STRIPS, a następnie automatycznie przeszło przez text player.
 
-| Prompt theme | Mode | Generated series title | LLM succeeded? | Underlying quest structure |
+| Motyw promptu | Tryb | Wygenerowany tytuł serii | LLM się udał? | Podstawowa struktura questów |
 |---|---|---|---|---|
-| Disgraced naval captain + cursed sextant | `compact` | *The Salt-Kissed Curse* | Yes (`used_fallback: false`) | Identical to fallback template |
-| Astronaut on a Jovian moon + alien signal | `full` | *Echo of the Ashen Bell* | No (`used_fallback: true`) | Fallback template (LLM produced an unsolvable schema) |
-| Musician inherits a haunted opera house | `compact` | *Echoes of Porcelain* | Yes (`used_fallback: false`) | Identical to fallback template |
+| Zhańbiony kapitan morski + przeklęty sekstant | `compact` | *The Salt-Kissed Curse* | Tak (`used_fallback: false`) | Identyczna z szablonem fallback |
+| Astronauta na księżycu Jowisza + obcy sygnał | `full` | *Echo of the Ashen Bell* | Nie (`used_fallback: true`) | Szablon fallback (LLM wyprodukował nierozwiązywalny schemat) |
+| Muzyk dziedziczy nawiedzony teatr operowy | `compact` | *Echoes of Porcelain* | Tak (`used_fallback: false`) | Identyczna z szablonem fallback |
 
-**Observation 1 — Narrative skin changes, structure does not.**
-In every successful `compact` run, `gemma3:4b` produced a new dramatic seed (title, premise, motifs, twist, and quest titles), but the symbolic compiler then built the actual quest steps from the same deterministic fallback template. Consequently, the locations, items, NPCs, enemies, and step order remained identical across all three prompts. The model decorated the skeleton with different words, but it did not design a new skeleton.
+**Obserwacja 1 — Skóra narracyjna się zmienia, struktura nie.**
+W każdym udanym uruchomieniu `compact` model `gemma3:4b` wyprodukował nowy *dramatic seed* (tytuł, premise, motywy, twist, tytuły questów), ale kompilator symboliczny następnie zbudował faktyczne kroki questów z tego samego deterministycznego szablonu fallback. W konsekwencji lokacje, przedmioty, NPC, wrogowie i kolejność kroków pozostały identyczne we wszystkich trzech promptach. Model przyozdobił szkielet innymi słowami, ale nie zaprojektował nowego szkieletu.
 
-**Observation 2 — `full` mode is impractical for this model.**
-When asked for a complete quest schema in `full` mode, `gemma3:4b` emitted a structure that failed the planner’s solvability check even after the repair pass. The generator automatically rejected the draft and fell back to the deterministic template. This confirms that asking a 4-billion-parameter model to write valid, solvable PDDL-compatible quest graphs is currently unreliable.
+**Obserwacja 2 — Tryb `full` jest niepraktyczny dla tego modelu.**
+Gdy poproszono o kompletny schemat questu w trybie `full`, `gemma3:4b` wyprodukował strukturę, która nie przeszła testu rozwiązywalności plannera nawet po *repair pass*. Generator automatycznie odrzucił ten szkic i przełączył się na deterministyczny szablon. Potwierdza to, że proszenie modelu o 4 miliardy parametrów o pisanie poprawnych, rozwiązywalnych grafów questów kompatybilnych z PDDL jest obecnie niepewne.
 
-**Observation 3 — All generated series are playable.**
-Regardless of whether the LLM contributed or not, every quest in every series passed the STRIPS solver, and the `--auto` playthrough completed each series without errors.
+**Obserwacja 3 — Wszystkie wygenerowane serie są grywalne.**
+Niezależnie od tego, czy LLM przyczynił się do generacji czy nie, każdy quest w każdej serii przeszedł solver STRIPS, a *playthrough* `--auto` ukończyło każdą serię bez błędów.
 
-## 7. Playback
+## 7. Odtwarzanie
 
-The text player loads both JSON and PDDL. The JSON provides descriptions, names, narration, and dialogue. The PDDL state determines which actions are currently available. The menu is generated from applicable grounded STRIPS actions, not from a hand-written script.
+Text player wczytuje zarówno JSON, jak i PDDL. JSON dostarcza opisów, nazw, narracji i dialogów. Stan PDDL decyduje, które akcje są aktualnie dostępne. Menu jest generowane z możliwych do wykonania *grounded* akcji STRIPS, a nie z ręcznie napisanego skryptu.
 
-The first implementation was too linear: each state usually exposed only one action. The current version fixes that with optional STRIPS actions and consequence actions. For example, the first state now offers:
+Pierwsza implementacja była zbyt liniowa: każdy stan zazwyczaj oferował tylko jedną akcję. Obecna wersja naprawia to za pomocą opcjonalnych akcji STRIPS i akcji konsekwencji. Na przykład pierwszy stan teraz oferuje:
 
 ```text
 Available actions:
@@ -162,7 +162,7 @@ Available actions:
   3. Observe: Elder Mira
 ```
 
-Later choices can change the game state. Examples:
+Późniejsze wybory mogą zmieniać stan gry. Przykłady:
 
 ```text
 Available actions:
@@ -172,7 +172,7 @@ Available actions:
   4. Reveal hidden path with: Rusted Medallion
 ```
 
-In the second quest, pressing Iren creates a hostile guard. Fighting the guard wounds the player, and using `Bruisewort Tonic` removes the wound:
+W drugim queście naciśnięcie Iren tworzy wrogiego strażnika. Walka ze strażnikiem rani gracza, a użycie `Bruisewort Tonic` usuwa ranę:
 
 ```text
 Pressed too hard, Iren snaps her map case shut and signals the oathbound guard.
@@ -184,41 +184,42 @@ Status: wounded
 You use Bruisewort Tonic. The wound stops bleeding.
 ```
 
-Example command:
+Przykładowa komenda:
 
 ```bash
 python3 -B -m questgen.play --series quests/generated/ash_bell
 ```
 
-Automatic full playthrough:
+Automatyczne pełne przejście:
 
 ```bash
 python3 -B -m questgen.play --series quests/generated/ash_bell --auto
 ```
 
-## 8. Strengths and Weaknesses
+## 8. Mocne i słabe strony
 
-Strengths:
+Mocne strony:
 
-- The generated PDDL is controlled and easy to repair.
-- Every quest is verified by a local STRIPS planner.
-- JSON and PDDL are compiled from the same quest steps.
-- The player uses the same action semantics as the planner.
-- The player has optional exploration choices and consequential side choices instead of a single forced action at most states.
-- `gemma3:4b` is small enough to run locally and was fast enough for this task.
+- Wygenerowane PDDL jest kontrolowane i łatwe do naprawienia.
+- Każdy quest jest weryfikowany przez lokalny planner STRIPS.
+- JSON i PDDL są kompilowane z tych samych kroków questu.
+- Player używa tej samej semantyki akcji co planner.
+- Player posiada opcjonalne wybory eksploracyjne i konsekwencje decyzji zamiast pojedynczej wymuszonej akcji w większości stanów.
+- `gemma3:4b` jest wystarczająco mały, by działać lokalnie, i był wystarczająco szybki dla tego zadania.
+- Zestaw 163 testów jednostkowych pokrywa parser, planner, domenę, generator, player, pliki wyjściowe i pipeline integracyjny (84% pokrycia kodu).
 
-Weaknesses:
+Słabe strony:
 
-- The symbolic compiler limits narrative freedom compared with full free-form LLM generation.
-- Stage predicates still guide the critical quest path through a canonical narrative order.
-- Cross-quest state transfer is simplified; important carried items are inferred per quest.
-- Optional consequences affect local state but do not currently branch the final quest objective.
-- The `full` LLM mode remains experimental and may produce invalid schemas.
-- `gemma3:4b` in `compact` mode only changes the narrative "skin"; it does not generate structurally different quests. The underlying locations, items, NPCs, and step order always fall back to the deterministic template.
+- Kompilator symboliczny ogranicza swobodę narracyjną w porównaniu z pełną, dowolną generacją LLM.
+- Predykaty stage nadal prowadzą krytyczną ścieżkę questu przez kanoniczną kolejność narracyjną.
+- Transfer stanu między questami jest uproszczony; ważne niesione przedmioty są wnioskowane per quest.
+- Opcjonalne konsekwencje wpływają na lokalny stan, ale obecnie nie rozgałęziają końcowego celu questu.
+- Tryb `full` LLM pozostaje eksperymentalny i może produkować niepoprawne schematy.
+- `gemma3:4b` w trybie `compact` zmienia jedynie narracyjną "skórkę"; nie generuje strukturalnie różnych questów. Podstawowe lokacje, przedmioty, NPC i kolejność kroków zawsze wracają do deterministycznego szablonu.
 
-## 9. Notes on Model Choice
+## 9. Uwagi o wyborze modelu
 
-Using English prompts improved reliability and made `gemma3:4b` sufficient. The larger `qwen3.6:latest` model was technically installed, but it was not practical here because it timed out even on compact prompts. The final generated series is therefore a real Ollama-assisted run using the smaller downloaded model, not a fallback-only result.
+Użycie angielskich promptów poprawiło niezawodność i uczyniło `gemma3:4b` wystarczającym. Większy model `qwen3.6:latest` był technicznie zainstalowany, ale nie okazał się praktyczny tutaj, ponieważ kończył się timeoutem nawet przy kompaktowych promptach. Ostatecznie wygenerowana seria jest zatem rzeczywistym uruchomieniem wspomaganym przez Ollamę z użyciem mniejszego pobranego modelu, a nie wyłącznie wynikiem fallback.
 
 ## 10. Podział prac
 
@@ -227,4 +228,4 @@ Using English prompts improved reliability and made `gemma3:4b` sufficient. The 
 | **Paulina Hładki** | **Domena PDDL i solver STRIPS** | Zaprojektowanie wspólnej domeny `mythic_quest` (typy, predykaty, akcje STRIPS) w pliku `questgen/domain.py`. Implementacja parsera PDDL i forward plannera (BFS) w pliku `questgen/pddl.py` — parsowanie, grounding akcji, solver, weryfikacja planów. Stworzenie testów jednostkowych dla parsera i solvera. |
 | **Marta Jędrzejczak** | **Generator fabuł i integracja LLM** | Implementacja generatora w pliku `questgen/generator.py` — integracja z API Ollamy, kompilacja *dramatic seed* do PDDL/JSON, mechanizm naprawy `repair_quest_schema`, weryfikacja `compile_and_verify`. Wygenerowanie pierwszej działającej serii `ash_bell` w trybie `compact` z modelem `gemma3:4b`. |
 | **Szymon Szymankiewicz** | **Interfejs tekstowy (player)** | Implementacja silnika gry w pliku `questgen/play.py` — ładowanie JSON/PDDL, generowanie menu z grounded STRIPS actions, system narracji, dialogów, konsekwencji (rany, wrogowie, opcjonalne przedmioty). Dodanie opcji `--auto` do automatycznego przechodzenia questów. Testy dla helperów playera. |
-| **Dominik Maćkowiak** | **Testy, weryfikacja i raport** | Stworzenie testów jednostkowych w katalogu `tests/` (w tym `test_output_files.py` i `test_integration.py`). Weryfikacja wszystkich wygenerowanych serii questów. Napisanie i skład raportu (`raport.md` → PDF).
+| **Dominik Maćkowiak** | **Testy, weryfikacja i raport** | Stworzenie testów jednostkowych w katalogu `tests/` (w tym `test_output_files.py` i `test_integration.py`). Weryfikacja wszystkich wygenerowanych serii questów. Napisanie i skład raportu (`raport.md` → PDF). |
