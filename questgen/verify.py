@@ -13,9 +13,17 @@ from .play import find_quest_pairs
 
 def verify_series(series_dir: Path) -> bool:
     domain_path = series_dir / "domain.pddl"
-    domain = load_domain(domain_path)
+    try:
+        domain = load_domain(domain_path)
+    except FileNotFoundError:
+        print(f"FAIL: missing domain file: {domain_path}")
+        return False
+    pairs = find_quest_pairs(series_dir)
+    if not pairs:
+        print("FAIL: no quest_*.json/.pddl pairs found")
+        return False
     ok = True
-    for json_path, pddl_path in find_quest_pairs(series_dir):
+    for json_path, pddl_path in pairs:
         quest = json.loads(json_path.read_text(encoding="utf-8"))
         problem = load_problem(pddl_path)
         plan = solve(domain, problem, max_depth=80)

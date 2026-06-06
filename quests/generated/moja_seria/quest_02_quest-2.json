@@ -1,0 +1,244 @@
+{
+  "id": "quest-2",
+  "title": "Shadows of the Past",
+  "synopsis": "He must decipher the rewritten memories to identify the architect of the curse.",
+  "dramatic_role": "threshold",
+  "start_location": "ancestor-shrine",
+  "locations": [
+    {
+      "id": "ancestor-shrine",
+      "name": "Ancestor Shrine",
+      "description": "Silver dust rests on the threshold like an unfinished prayer."
+    },
+    {
+      "id": "cartographers-hut",
+      "name": "Cartographer's Hut",
+      "description": "Maps hang from the rafters, stirred by a draft from the mine."
+    },
+    {
+      "id": "mine-gate",
+      "name": "Mine Gate",
+      "description": "Rusted bars bear the palm mark of the old bellkeeper."
+    },
+    {
+      "id": "black-adit",
+      "name": "Black Adit",
+      "description": "The tunnel beyond the gate breathes cold air and old smoke."
+    }
+  ],
+  "items": [
+    {
+      "id": "vein-map",
+      "name": "Vein Map",
+      "description": "The map shows the path toward the mine's buried heart.",
+      "location": "cartographers-hut",
+      "portable": true
+    },
+    {
+      "id": "bellkeeper-key",
+      "name": "Bellkeeper Key",
+      "description": "A key shaped like the clapper of a small bell.",
+      "location": "mine-gate",
+      "portable": true
+    },
+    {
+      "id": "rusted-medallion",
+      "name": "Rusted Medallion",
+      "description": "The first bellkeeper's sign, recovered from the old well.",
+      "location": "ancestor-shrine",
+      "portable": true
+    },
+    {
+      "id": "bruisewort-tonic",
+      "name": "Bruisewort Tonic",
+      "description": "A bitter field tonic that steadies the breath and dulls pain after a fight.",
+      "location": "cartographers-hut",
+      "portable": true,
+      "optional": true,
+      "healing": true
+    }
+  ],
+  "npcs": [
+    {
+      "id": "iren-cartographer",
+      "name": "Iren the Cartographer",
+      "description": "She does not trust heroes, but she trusts old signs.",
+      "location": "cartographers-hut",
+      "dialogues": [
+        {
+          "trigger": "talk",
+          "text": "Show me the bellkeeper's sign, and I will give you the true vein map."
+        },
+        {
+          "trigger": "give:rusted-medallion",
+          "text": "That is enough. Go to the gate before the shadow learns your name."
+        }
+      ]
+    }
+  ],
+  "enemies": [
+    {
+      "id": "oathbound-guard",
+      "name": "Oathbound Guard",
+      "description": "A silent guard sworn to protect Iren's maps from desperate hands.",
+      "location": "cartographers-hut",
+      "optional": true,
+      "hostile": false
+    }
+  ],
+  "steps": [
+    {
+      "action": "travel",
+      "from": "ancestor-shrine",
+      "to": "cartographers-hut",
+      "narration": "The hero carries the medallion to the only person who knows the old shafts."
+    },
+    {
+      "action": "give",
+      "item": "rusted-medallion",
+      "npc": "iren-cartographer",
+      "location": "cartographers-hut",
+      "dialogue": "That is enough. Go to the gate before the shadow learns your name.",
+      "narration": "The cartographer accepts the medallion as proof and opens a hidden map case."
+    },
+    {
+      "action": "take",
+      "item": "vein-map",
+      "location": "cartographers-hut",
+      "narration": "The map unrolls by itself and points toward the mine gate."
+    },
+    {
+      "action": "travel",
+      "from": "cartographers-hut",
+      "to": "mine-gate",
+      "narration": "The road to the mine threshold smells of wet iron."
+    },
+    {
+      "action": "take",
+      "item": "bellkeeper-key",
+      "location": "mine-gate",
+      "narration": "The key waits beneath a stone marked with the map's symbol."
+    },
+    {
+      "action": "unlock",
+      "gate": "bellkeeper-gate",
+      "key": "bellkeeper-key",
+      "from": "mine-gate",
+      "to": "black-adit",
+      "narration": "The gate opens without a creak, as if afraid to wake what waits below."
+    },
+    {
+      "action": "travel",
+      "from": "mine-gate",
+      "to": "black-adit",
+      "narration": "The hero crosses the threshold and leaves daylight behind."
+    }
+  ],
+  "consequences": {
+    "provocations": [
+      {
+        "npc": "iren-cartographer",
+        "enemy": "oathbound-guard",
+        "location": "cartographers-hut",
+        "narration": "Pressed too hard, Iren snaps her map case shut and signals the oathbound guard."
+      }
+    ]
+  },
+  "objects": [
+    {
+      "id": "ancestor-shrine",
+      "type": "location",
+      "name": "Ancestor Shrine",
+      "description": "Silver dust rests on the threshold like an unfinished prayer."
+    },
+    {
+      "id": "cartographers-hut",
+      "type": "location",
+      "name": "Cartographer's Hut",
+      "description": "Maps hang from the rafters, stirred by a draft from the mine."
+    },
+    {
+      "id": "mine-gate",
+      "type": "location",
+      "name": "Mine Gate",
+      "description": "Rusted bars bear the palm mark of the old bellkeeper."
+    },
+    {
+      "id": "black-adit",
+      "type": "location",
+      "name": "Black Adit",
+      "description": "The tunnel beyond the gate breathes cold air and old smoke."
+    },
+    {
+      "id": "vein-map",
+      "type": "item",
+      "name": "Vein Map",
+      "description": "The map shows the path toward the mine's buried heart."
+    },
+    {
+      "id": "bellkeeper-key",
+      "type": "item",
+      "name": "Bellkeeper Key",
+      "description": "A key shaped like the clapper of a small bell."
+    },
+    {
+      "id": "rusted-medallion",
+      "type": "item",
+      "name": "Rusted Medallion",
+      "description": "The first bellkeeper's sign, recovered from the old well."
+    },
+    {
+      "id": "bruisewort-tonic",
+      "type": "item",
+      "name": "Bruisewort Tonic",
+      "description": "A bitter field tonic that steadies the breath and dulls pain after a fight."
+    },
+    {
+      "id": "iren-cartographer",
+      "type": "npc",
+      "name": "Iren the Cartographer",
+      "description": "She does not trust heroes, but she trusts old signs.",
+      "dialogues": [
+        {
+          "trigger": "talk",
+          "text": "Show me the bellkeeper's sign, and I will give you the true vein map."
+        },
+        {
+          "trigger": "give:rusted-medallion",
+          "text": "That is enough. Go to the gate before the shadow learns your name."
+        }
+      ]
+    },
+    {
+      "id": "oathbound-guard",
+      "type": "enemy",
+      "name": "Oathbound Guard",
+      "description": "A silent guard sworn to protect Iren's maps from desperate hands."
+    },
+    {
+      "id": "bellkeeper-gate",
+      "type": "gate",
+      "name": "Bellkeeper Gate",
+      "description": "A locked passage controlled by the locked-gate predicate."
+    }
+  ],
+  "expected_plan": [
+    "(travel ancestor-shrine cartographers-hut quest-2-s0 quest-2-s1)",
+    "(give rusted-medallion iren-cartographer cartographers-hut quest-2-s1 quest-2-s2)",
+    "(take vein-map cartographers-hut quest-2-s2 quest-2-s3)",
+    "(travel cartographers-hut mine-gate quest-2-s3 quest-2-s4)",
+    "(take bellkeeper-key mine-gate quest-2-s4 quest-2-s5)",
+    "(unlock bellkeeper-gate bellkeeper-key mine-gate black-adit quest-2-s5 quest-2-s6)",
+    "(travel mine-gate black-adit quest-2-s6 quest-2-s7)"
+  ],
+  "verified_plan": [
+    "(travel ancestor-shrine cartographers-hut quest-2-s0 quest-2-s1)",
+    "(give rusted-medallion iren-cartographer cartographers-hut quest-2-s1 quest-2-s2)",
+    "(take vein-map cartographers-hut quest-2-s2 quest-2-s3)",
+    "(travel cartographers-hut mine-gate quest-2-s3 quest-2-s4)",
+    "(take bellkeeper-key mine-gate quest-2-s4 quest-2-s5)",
+    "(unlock bellkeeper-gate bellkeeper-key mine-gate black-adit quest-2-s5 quest-2-s6)",
+    "(travel mine-gate black-adit quest-2-s6 quest-2-s7)"
+  ],
+  "repairs": []
+}

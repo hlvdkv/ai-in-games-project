@@ -1,0 +1,7 @@
+(travel ancestor-shrine cartographers-hut quest-2-s0 quest-2-s1)
+(give rusted-medallion iren-cartographer cartographers-hut quest-2-s1 quest-2-s2)
+(take vein-map cartographers-hut quest-2-s2 quest-2-s3)
+(travel cartographers-hut mine-gate quest-2-s3 quest-2-s4)
+(take bellkeeper-key mine-gate quest-2-s4 quest-2-s5)
+(unlock bellkeeper-gate bellkeeper-key mine-gate black-adit quest-2-s5 quest-2-s6)
+(travel mine-gate black-adit quest-2-s6 quest-2-s7)

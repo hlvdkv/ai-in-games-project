@@ -1,0 +1,5 @@
+(talk elder-mira heatherfall quest-1-s0 quest-1-s1)
+(travel heatherfall old-well quest-1-s1 quest-1-s2)
+(take rusted-medallion old-well quest-1-s2 quest-1-s3)
+(travel old-well ancestor-shrine quest-1-s3 quest-1-s4)
+(take silver-knife ancestor-shrine quest-1-s4 quest-1-s5)

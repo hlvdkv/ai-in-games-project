@@ -1,0 +1,669 @@
+{
+  "series_title": "The Echoing Archive",
+  "premise": "A mage's obsession with a cursed library unravels a conspiracy to erase the kingdom's history.",
+  "quests": [
+    {
+      "id": "quest-1",
+      "title": "The Silent Pages",
+      "synopsis": "Kaelen discovers the library and its dangerous power.",
+      "dramatic_role": "call",
+      "start_location": "heatherfall",
+      "locations": [
+        {
+          "id": "heatherfall",
+          "name": "Heatherfall",
+          "description": "Low fog hangs over the roofs, and the villagers speak more softly than usual."
+        },
+        {
+          "id": "old-well",
+          "name": "Old Well",
+          "description": "The stone ring of the well trembles as if someone below is striking metal."
+        },
+        {
+          "id": "ancestor-shrine",
+          "name": "Ancestor Shrine",
+          "description": "The shrine walls carry the carved names of those who once sealed the mine."
+        },
+        {
+          "id": "root-chapel",
+          "name": "Root Chapel",
+          "description": "A small chapel under the roots, where miners once left offerings before descending."
+        }
+      ],
+      "items": [
+        {
+          "id": "rusted-medallion",
+          "name": "Rusted Medallion",
+          "description": "The mark of the first bellkeeper, cold even in a warm hand.",
+          "location": "old-well",
+          "portable": true
+        },
+        {
+          "id": "silver-knife",
+          "name": "Silver Knife",
+          "description": "A plain blade for cutting shadows, hidden in the shrine.",
+          "location": "ancestor-shrine",
+          "portable": true
+        },
+        {
+          "id": "healing-salve",
+          "name": "Healing Salve",
+          "description": "A miner's salve made from pale moss and ash-salt. It can close a fresh wound.",
+          "location": "root-chapel",
+          "portable": true,
+          "optional": true,
+          "healing": true
+        }
+      ],
+      "npcs": [
+        {
+          "id": "elder-mira",
+          "name": "Elder Mira",
+          "description": "The last villager who remembers the night the bell fell silent.",
+          "location": "heatherfall",
+          "dialogues": [
+            {
+              "trigger": "talk",
+              "text": "If the well sings with ash, seek the bellkeeper's medallion."
+            }
+          ]
+        }
+      ],
+      "enemies": [],
+      "steps": [
+        {
+          "action": "talk",
+          "npc": "elder-mira",
+          "location": "heatherfall",
+          "dialogue": "If the well sings with ash, seek the bellkeeper's medallion.",
+          "narration": "Mira recognizes the hero and points toward the first wound in the earth."
+        },
+        {
+          "action": "travel",
+          "from": "heatherfall",
+          "to": "old-well",
+          "narration": "The path to the well is overgrown with pale heather."
+        },
+        {
+          "action": "take",
+          "item": "rusted-medallion",
+          "location": "old-well",
+          "narration": "The medallion loosens from the wet stone and falls silent in the hero's hand."
+        },
+        {
+          "action": "travel",
+          "from": "old-well",
+          "to": "ancestor-shrine",
+          "narration": "A trail of ash leads toward the shrine."
+        },
+        {
+          "action": "take",
+          "item": "silver-knife",
+          "location": "ancestor-shrine",
+          "narration": "The blade answers the medallion with a clean flash of light."
+        }
+      ],
+      "consequences": {
+        "hidden_routes": [
+          {
+            "item": "rusted-medallion",
+            "from": "old-well",
+            "to": "root-chapel",
+            "narration": "The medallion warms in the hero's hand, and roots pull aside to reveal a narrow chapel path."
+          }
+        ]
+      },
+      "objects": [
+        {
+          "id": "heatherfall",
+          "type": "location",
+          "name": "Heatherfall",
+          "description": "Low fog hangs over the roofs, and the villagers speak more softly than usual."
+        },
+        {
+          "id": "old-well",
+          "type": "location",
+          "name": "Old Well",
+          "description": "The stone ring of the well trembles as if someone below is striking metal."
+        },
+        {
+          "id": "ancestor-shrine",
+          "type": "location",
+          "name": "Ancestor Shrine",
+          "description": "The shrine walls carry the carved names of those who once sealed the mine."
+        },
+        {
+          "id": "root-chapel",
+          "type": "location",
+          "name": "Root Chapel",
+          "description": "A small chapel under the roots, where miners once left offerings before descending."
+        },
+        {
+          "id": "rusted-medallion",
+          "type": "item",
+          "name": "Rusted Medallion",
+          "description": "The mark of the first bellkeeper, cold even in a warm hand."
+        },
+        {
+          "id": "silver-knife",
+          "type": "item",
+          "name": "Silver Knife",
+          "description": "A plain blade for cutting shadows, hidden in the shrine."
+        },
+        {
+          "id": "healing-salve",
+          "type": "item",
+          "name": "Healing Salve",
+          "description": "A miner's salve made from pale moss and ash-salt. It can close a fresh wound."
+        },
+        {
+          "id": "elder-mira",
+          "type": "npc",
+          "name": "Elder Mira",
+          "description": "The last villager who remembers the night the bell fell silent.",
+          "dialogues": [
+            {
+              "trigger": "talk",
+              "text": "If the well sings with ash, seek the bellkeeper's medallion."
+            }
+          ]
+        }
+      ],
+      "expected_plan": [
+        "(talk elder-mira heatherfall quest-1-s0 quest-1-s1)",
+        "(travel heatherfall old-well quest-1-s1 quest-1-s2)",
+        "(take rusted-medallion old-well quest-1-s2 quest-1-s3)",
+        "(travel old-well ancestor-shrine quest-1-s3 quest-1-s4)",
+        "(take silver-knife ancestor-shrine quest-1-s4 quest-1-s5)"
+      ],
+      "verified_plan": [
+        "(talk elder-mira heatherfall quest-1-s0 quest-1-s1)",
+        "(travel heatherfall old-well quest-1-s1 quest-1-s2)",
+        "(take rusted-medallion old-well quest-1-s2 quest-1-s3)",
+        "(travel old-well ancestor-shrine quest-1-s3 quest-1-s4)",
+        "(take silver-knife ancestor-shrine quest-1-s4 quest-1-s5)"
+      ],
+      "repairs": []
+    },
+    {
+      "id": "quest-2",
+      "title": "Shadows of the Past",
+      "synopsis": "He must decipher the rewritten memories to identify the architect of the curse.",
+      "dramatic_role": "threshold",
+      "start_location": "ancestor-shrine",
+      "locations": [
+        {
+          "id": "ancestor-shrine",
+          "name": "Ancestor Shrine",
+          "description": "Silver dust rests on the threshold like an unfinished prayer."
+        },
+        {
+          "id": "cartographers-hut",
+          "name": "Cartographer's Hut",
+          "description": "Maps hang from the rafters, stirred by a draft from the mine."
+        },
+        {
+          "id": "mine-gate",
+          "name": "Mine Gate",
+          "description": "Rusted bars bear the palm mark of the old bellkeeper."
+        },
+        {
+          "id": "black-adit",
+          "name": "Black Adit",
+          "description": "The tunnel beyond the gate breathes cold air and old smoke."
+        }
+      ],
+      "items": [
+        {
+          "id": "vein-map",
+          "name": "Vein Map",
+          "description": "The map shows the path toward the mine's buried heart.",
+          "location": "cartographers-hut",
+          "portable": true
+        },
+        {
+          "id": "bellkeeper-key",
+          "name": "Bellkeeper Key",
+          "description": "A key shaped like the clapper of a small bell.",
+          "location": "mine-gate",
+          "portable": true
+        },
+        {
+          "id": "rusted-medallion",
+          "name": "Rusted Medallion",
+          "description": "The first bellkeeper's sign, recovered from the old well.",
+          "location": "ancestor-shrine",
+          "portable": true
+        },
+        {
+          "id": "bruisewort-tonic",
+          "name": "Bruisewort Tonic",
+          "description": "A bitter field tonic that steadies the breath and dulls pain after a fight.",
+          "location": "cartographers-hut",
+          "portable": true,
+          "optional": true,
+          "healing": true
+        }
+      ],
+      "npcs": [
+        {
+          "id": "iren-cartographer",
+          "name": "Iren the Cartographer",
+          "description": "She does not trust heroes, but she trusts old signs.",
+          "location": "cartographers-hut",
+          "dialogues": [
+            {
+              "trigger": "talk",
+              "text": "Show me the bellkeeper's sign, and I will give you the true vein map."
+            },
+            {
+              "trigger": "give:rusted-medallion",
+              "text": "That is enough. Go to the gate before the shadow learns your name."
+            }
+          ]
+        }
+      ],
+      "enemies": [
+        {
+          "id": "oathbound-guard",
+          "name": "Oathbound Guard",
+          "description": "A silent guard sworn to protect Iren's maps from desperate hands.",
+          "location": "cartographers-hut",
+          "optional": true,
+          "hostile": false
+        }
+      ],
+      "steps": [
+        {
+          "action": "travel",
+          "from": "ancestor-shrine",
+          "to": "cartographers-hut",
+          "narration": "The hero carries the medallion to the only person who knows the old shafts."
+        },
+        {
+          "action": "give",
+          "item": "rusted-medallion",
+          "npc": "iren-cartographer",
+          "location": "cartographers-hut",
+          "dialogue": "That is enough. Go to the gate before the shadow learns your name.",
+          "narration": "The cartographer accepts the medallion as proof and opens a hidden map case."
+        },
+        {
+          "action": "take",
+          "item": "vein-map",
+          "location": "cartographers-hut",
+          "narration": "The map unrolls by itself and points toward the mine gate."
+        },
+        {
+          "action": "travel",
+          "from": "cartographers-hut",
+          "to": "mine-gate",
+          "narration": "The road to the mine threshold smells of wet iron."
+        },
+        {
+          "action": "take",
+          "item": "bellkeeper-key",
+          "location": "mine-gate",
+          "narration": "The key waits beneath a stone marked with the map's symbol."
+        },
+        {
+          "action": "unlock",
+          "gate": "bellkeeper-gate",
+          "key": "bellkeeper-key",
+          "from": "mine-gate",
+          "to": "black-adit",
+          "narration": "The gate opens without a creak, as if afraid to wake what waits below."
+        },
+        {
+          "action": "travel",
+          "from": "mine-gate",
+          "to": "black-adit",
+          "narration": "The hero crosses the threshold and leaves daylight behind."
+        }
+      ],
+      "consequences": {
+        "provocations": [
+          {
+            "npc": "iren-cartographer",
+            "enemy": "oathbound-guard",
+            "location": "cartographers-hut",
+            "narration": "Pressed too hard, Iren snaps her map case shut and signals the oathbound guard."
+          }
+        ]
+      },
+      "objects": [
+        {
+          "id": "ancestor-shrine",
+          "type": "location",
+          "name": "Ancestor Shrine",
+          "description": "Silver dust rests on the threshold like an unfinished prayer."
+        },
+        {
+          "id": "cartographers-hut",
+          "type": "location",
+          "name": "Cartographer's Hut",
+          "description": "Maps hang from the rafters, stirred by a draft from the mine."
+        },
+        {
+          "id": "mine-gate",
+          "type": "location",
+          "name": "Mine Gate",
+          "description": "Rusted bars bear the palm mark of the old bellkeeper."
+        },
+        {
+          "id": "black-adit",
+          "type": "location",
+          "name": "Black Adit",
+          "description": "The tunnel beyond the gate breathes cold air and old smoke."
+        },
+        {
+          "id": "vein-map",
+          "type": "item",
+          "name": "Vein Map",
+          "description": "The map shows the path toward the mine's buried heart."
+        },
+        {
+          "id": "bellkeeper-key",
+          "type": "item",
+          "name": "Bellkeeper Key",
+          "description": "A key shaped like the clapper of a small bell."
+        },
+        {
+          "id": "rusted-medallion",
+          "type": "item",
+          "name": "Rusted Medallion",
+          "description": "The first bellkeeper's sign, recovered from the old well."
+        },
+        {
+          "id": "bruisewort-tonic",
+          "type": "item",
+          "name": "Bruisewort Tonic",
+          "description": "A bitter field tonic that steadies the breath and dulls pain after a fight."
+        },
+        {
+          "id": "iren-cartographer",
+          "type": "npc",
+          "name": "Iren the Cartographer",
+          "description": "She does not trust heroes, but she trusts old signs.",
+          "dialogues": [
+            {
+              "trigger": "talk",
+              "text": "Show me the bellkeeper's sign, and I will give you the true vein map."
+            },
+            {
+              "trigger": "give:rusted-medallion",
+              "text": "That is enough. Go to the gate before the shadow learns your name."
+            }
+          ]
+        },
+        {
+          "id": "oathbound-guard",
+          "type": "enemy",
+          "name": "Oathbound Guard",
+          "description": "A silent guard sworn to protect Iren's maps from desperate hands."
+        },
+        {
+          "id": "bellkeeper-gate",
+          "type": "gate",
+          "name": "Bellkeeper Gate",
+          "description": "A locked passage controlled by the locked-gate predicate."
+        }
+      ],
+      "expected_plan": [
+        "(travel ancestor-shrine cartographers-hut quest-2-s0 quest-2-s1)",
+        "(give rusted-medallion iren-cartographer cartographers-hut quest-2-s1 quest-2-s2)",
+        "(take vein-map cartographers-hut quest-2-s2 quest-2-s3)",
+        "(travel cartographers-hut mine-gate quest-2-s3 quest-2-s4)",
+        "(take bellkeeper-key mine-gate quest-2-s4 quest-2-s5)",
+        "(unlock bellkeeper-gate bellkeeper-key mine-gate black-adit quest-2-s5 quest-2-s6)",
+        "(travel mine-gate black-adit quest-2-s6 quest-2-s7)"
+      ],
+      "verified_plan": [
+        "(travel ancestor-shrine cartographers-hut quest-2-s0 quest-2-s1)",
+        "(give rusted-medallion iren-cartographer cartographers-hut quest-2-s1 quest-2-s2)",
+        "(take vein-map cartographers-hut quest-2-s2 quest-2-s3)",
+        "(travel cartographers-hut mine-gate quest-2-s3 quest-2-s4)",
+        "(take bellkeeper-key mine-gate quest-2-s4 quest-2-s5)",
+        "(unlock bellkeeper-gate bellkeeper-key mine-gate black-adit quest-2-s5 quest-2-s6)",
+        "(travel mine-gate black-adit quest-2-s6 quest-2-s7)"
+      ],
+      "repairs": []
+    },
+    {
+      "id": "quest-3",
+      "title": "Reclaiming the Truth",
+      "synopsis": "Kaelen confronts the corrupted entity and restores the true timeline.",
+      "dramatic_role": "ordeal_return",
+      "start_location": "black-adit",
+      "locations": [
+        {
+          "id": "black-adit",
+          "name": "Black Adit",
+          "description": "Ash glows inside the tunnel walls, arranging itself into old faces."
+        },
+        {
+          "id": "bell-hall",
+          "name": "Bell Hall",
+          "description": "A vast bell hangs over a crack in the stone, though no tower was ever built here."
+        },
+        {
+          "id": "mine-core",
+          "name": "Mine Core",
+          "description": "The deepest chamber is silent, but the silence presses against the bones."
+        },
+        {
+          "id": "memorial-alcove",
+          "name": "Memorial Alcove",
+          "description": "Names of forgotten miners shimmer here whenever the bell heart is raised."
+        }
+      ],
+      "items": [
+        {
+          "id": "silver-knife",
+          "name": "Silver Knife",
+          "description": "The shrine blade, now darker along the edge.",
+          "location": "black-adit",
+          "portable": true
+        },
+        {
+          "id": "bell-heart",
+          "name": "Bell Heart",
+          "description": "A warm shard of metal that beats like a living heart.",
+          "location": "bell-hall",
+          "portable": true
+        },
+        {
+          "id": "memory-charm",
+          "name": "Memory Charm",
+          "description": "A charm woven from wire and soot-black thread, warm with remembered voices.",
+          "location": "memorial-alcove",
+          "portable": true,
+          "optional": true
+        }
+      ],
+      "npcs": [
+        {
+          "id": "bellkeepers-shade",
+          "name": "Bellkeeper's Shade",
+          "description": "Not an enemy, but a memory of guilt.",
+          "location": "bell-hall",
+          "dialogues": [
+            {
+              "trigger": "talk",
+              "text": "Do not break the bell. Return its heart where the earth still remembers silence."
+            }
+          ]
+        }
+      ],
+      "enemies": [
+        {
+          "id": "ash-guardian",
+          "name": "Ash Guardian",
+          "description": "Armor filled with hot dust and the anger of lost miners.",
+          "location": "bell-hall"
+        }
+      ],
+      "steps": [
+        {
+          "action": "travel",
+          "from": "black-adit",
+          "to": "bell-hall",
+          "narration": "Each step toward the hall calls up the bell's distant toll."
+        },
+        {
+          "action": "fight",
+          "enemy": "ash-guardian",
+          "location": "bell-hall",
+          "weapon": "silver-knife",
+          "narration": "The silver knife cuts through the dust, and the guardian collapses into ash."
+        },
+        {
+          "action": "talk",
+          "npc": "bellkeepers-shade",
+          "location": "bell-hall",
+          "dialogue": "Do not break the bell. Return its heart where the earth still remembers silence.",
+          "narration": "The bellkeeper's shade separates grief from rage."
+        },
+        {
+          "action": "take",
+          "item": "bell-heart",
+          "location": "bell-hall",
+          "narration": "The bell heart burns hot, but it does not harm the hero."
+        },
+        {
+          "action": "travel",
+          "from": "bell-hall",
+          "to": "mine-core",
+          "narration": "The deepest road passes through a tunnel without echoes."
+        },
+        {
+          "action": "ritual",
+          "artifact": "bell-heart",
+          "location": "mine-core",
+          "narration": "The rite of silence seals the crack, and for the first time in years the village hears true wind."
+        }
+      ],
+      "consequences": {
+        "hidden_routes": [
+          {
+            "item": "bell-heart",
+            "from": "bell-hall",
+            "to": "memorial-alcove",
+            "narration": "The bell heart answers the names in the stone, and a memorial alcove opens behind the hanging bell."
+          }
+        ]
+      },
+      "objects": [
+        {
+          "id": "black-adit",
+          "type": "location",
+          "name": "Black Adit",
+          "description": "Ash glows inside the tunnel walls, arranging itself into old faces."
+        },
+        {
+          "id": "bell-hall",
+          "type": "location",
+          "name": "Bell Hall",
+          "description": "A vast bell hangs over a crack in the stone, though no tower was ever built here."
+        },
+        {
+          "id": "mine-core",
+          "type": "location",
+          "name": "Mine Core",
+          "description": "The deepest chamber is silent, but the silence presses against the bones."
+        },
+        {
+          "id": "memorial-alcove",
+          "type": "location",
+          "name": "Memorial Alcove",
+          "description": "Names of forgotten miners shimmer here whenever the bell heart is raised."
+        },
+        {
+          "id": "silver-knife",
+          "type": "item",
+          "name": "Silver Knife",
+          "description": "The shrine blade, now darker along the edge."
+        },
+        {
+          "id": "bell-heart",
+          "type": "item",
+          "name": "Bell Heart",
+          "description": "A warm shard of metal that beats like a living heart."
+        },
+        {
+          "id": "memory-charm",
+          "type": "item",
+          "name": "Memory Charm",
+          "description": "A charm woven from wire and soot-black thread, warm with remembered voices."
+        },
+        {
+          "id": "bellkeepers-shade",
+          "type": "npc",
+          "name": "Bellkeeper's Shade",
+          "description": "Not an enemy, but a memory of guilt.",
+          "dialogues": [
+            {
+              "trigger": "talk",
+              "text": "Do not break the bell. Return its heart where the earth still remembers silence."
+            }
+          ]
+        },
+        {
+          "id": "ash-guardian",
+          "type": "enemy",
+          "name": "Ash Guardian",
+          "description": "Armor filled with hot dust and the anger of lost miners."
+        }
+      ],
+      "expected_plan": [
+        "(travel black-adit bell-hall quest-3-s0 quest-3-s1)",
+        "(fight ash-guardian bell-hall silver-knife quest-3-s1 quest-3-s2)",
+        "(talk bellkeepers-shade bell-hall quest-3-s2 quest-3-s3)",
+        "(take bell-heart bell-hall quest-3-s3 quest-3-s4)",
+        "(travel bell-hall mine-core quest-3-s4 quest-3-s5)",
+        "(ritual bell-heart mine-core quest-3-s5 quest-3-s6)"
+      ],
+      "verified_plan": [
+        "(travel black-adit bell-hall quest-3-s0 quest-3-s1)",
+        "(fight ash-guardian bell-hall silver-knife quest-3-s1 quest-3-s2)",
+        "(talk bellkeepers-shade bell-hall quest-3-s2 quest-3-s3)",
+        "(take bell-heart bell-hall quest-3-s3 quest-3-s4)",
+        "(travel bell-hall mine-core quest-3-s4 quest-3-s5)",
+        "(ritual bell-heart mine-core quest-3-s5 quest-3-s6)"
+      ],
+      "repairs": []
+    }
+  ],
+  "motifs": [
+    "Memory",
+    "Illusion",
+    "Corruption"
+  ],
+  "twist": "The library's curse was created by a future king attempting to prevent a devastating war, but the attempt shattered reality itself.",
+  "llm_compact_draft": {
+    "series_title": "The Echoing Archive",
+    "premise": "A mage's obsession with a cursed library unravels a conspiracy to erase the kingdom's history.",
+    "motifs": [
+      "Memory",
+      "Illusion",
+      "Corruption"
+    ],
+    "quest_titles": [
+      "The Silent Pages",
+      "Shadows of the Past",
+      "Reclaiming the Truth"
+    ],
+    "quest_summaries": [
+      "Kaelen discovers the library and its dangerous power.",
+      "He must decipher the rewritten memories to identify the architect of the curse.",
+      "Kaelen confronts the corrupted entity and restores the true timeline."
+    ],
+    "dramatic_roles": [
+      "call",
+      "threshold",
+      "ordeal_return"
+    ],
+    "twist": "The library's curse was created by a future king attempting to prevent a devastating war, but the attempt shattered reality itself."
+  },
+  "generation_strategy": "ollama_compact_draft_then_symbolic_pddl_compilation"
+}

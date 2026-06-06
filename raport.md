@@ -1,5 +1,12 @@
 # Report: PDDL Quest Series Generator
 
+**Autorzy:**
+
+- Paulina Hładki (nr indeksu: ___)
+- Marta Jędrzejczak (nr indeksu: ___)
+- Szymon Szymankiewicz (151821)
+- Dominik Maćkowiak (151915)
+
 ## 1. Artifacts
 
 The project contains the four required elements:
@@ -101,7 +108,9 @@ OK   quest_03_quest-3.pddl: 6 actions
 Original prompt:
 
 ```text
-After years away, the hero returns to their childhood village and discovers that an ancient bell beneath the mine is waking ash-born shadows. The story should feel like a dark fairy tale, but end with hope for the village.
+After years away, the hero returns to their childhood village and discovers
+that an ancient bell beneath the mine is waking ash-born shadows.
+The story should feel like a dark fairy tale, but end with hope for the village.
 ```
 
 Generated series title:
@@ -121,7 +130,26 @@ Quest sequence:
 2. `Beneath Blackstone` - the threshold; the hero gives the medallion to Iren the Cartographer, obtains the vein map and key, and opens the mine gate.
 3. `The Bloom of Remembrance` - the ordeal and return; the hero defeats the ash guardian, listens to the bellkeeper's shade, retrieves the bell heart, and performs the rite of silence.
 
-## 6. Playback
+## 6. Multi-Prompt Experiment
+
+To test the robustness of the generator, three different English prompts were fed to the `gemma3:4b` model. Two runs used the default `compact` mode, and one used the experimental `full` mode. All outputs were verified by the local STRIPS solver and then played through automatically with the text player.
+
+| Prompt theme | Mode | Generated series title | LLM succeeded? | Underlying quest structure |
+|---|---|---|---|---|
+| Disgraced naval captain + cursed sextant | `compact` | *The Salt-Kissed Curse* | Yes (`used_fallback: false`) | Identical to fallback template |
+| Astronaut on a Jovian moon + alien signal | `full` | *Echo of the Ashen Bell* | No (`used_fallback: true`) | Fallback template (LLM produced an unsolvable schema) |
+| Musician inherits a haunted opera house | `compact` | *Echoes of Porcelain* | Yes (`used_fallback: false`) | Identical to fallback template |
+
+**Observation 1 — Narrative skin changes, structure does not.**
+In every successful `compact` run, `gemma3:4b` produced a new dramatic seed (title, premise, motifs, twist, and quest titles), but the symbolic compiler then built the actual quest steps from the same deterministic fallback template. Consequently, the locations, items, NPCs, enemies, and step order remained identical across all three prompts. The model decorated the skeleton with different words, but it did not design a new skeleton.
+
+**Observation 2 — `full` mode is impractical for this model.**
+When asked for a complete quest schema in `full` mode, `gemma3:4b` emitted a structure that failed the planner’s solvability check even after the repair pass. The generator automatically rejected the draft and fell back to the deterministic template. This confirms that asking a 4-billion-parameter model to write valid, solvable PDDL-compatible quest graphs is currently unreliable.
+
+**Observation 3 — All generated series are playable.**
+Regardless of whether the LLM contributed or not, every quest in every series passed the STRIPS solver, and the `--auto` playthrough completed each series without errors.
+
+## 7. Playback
 
 The text player loads both JSON and PDDL. The JSON provides descriptions, names, narration, and dialogue. The PDDL state determines which actions are currently available. The menu is generated from applicable grounded STRIPS actions, not from a hand-written script.
 
@@ -168,7 +196,7 @@ Automatic full playthrough:
 python3 -B -m questgen.play --series quests/generated/ash_bell --auto
 ```
 
-## 7. Strengths and Weaknesses
+## 8. Strengths and Weaknesses
 
 Strengths:
 
@@ -186,7 +214,17 @@ Weaknesses:
 - Cross-quest state transfer is simplified; important carried items are inferred per quest.
 - Optional consequences affect local state but do not currently branch the final quest objective.
 - The `full` LLM mode remains experimental and may produce invalid schemas.
+- `gemma3:4b` in `compact` mode only changes the narrative "skin"; it does not generate structurally different quests. The underlying locations, items, NPCs, and step order always fall back to the deterministic template.
 
-## 8. Notes on Model Choice
+## 9. Notes on Model Choice
 
 Using English prompts improved reliability and made `gemma3:4b` sufficient. The larger `qwen3.6:latest` model was technically installed, but it was not practical here because it timed out even on compact prompts. The final generated series is therefore a real Ollama-assisted run using the smaller downloaded model, not a fallback-only result.
+
+## 10. Podział prac
+
+| Osoba | Główny obszar | Szczegółowy opis wykonanych zadań |
+|---|---|---|
+| **Paulina Hładki** | **Domena PDDL i solver STRIPS** | Zaprojektowanie wspólnej domeny `mythic_quest` (typy, predykaty, akcje STRIPS) w pliku `questgen/domain.py`. Implementacja parsera PDDL i forward plannera (BFS) w pliku `questgen/pddl.py` — parsowanie, grounding akcji, solver, weryfikacja planów. Stworzenie testów jednostkowych dla parsera i solvera. |
+| **Marta Jędrzejczak** | **Generator fabuł i integracja LLM** | Implementacja generatora w pliku `questgen/generator.py` — integracja z API Ollamy, kompilacja *dramatic seed* do PDDL/JSON, mechanizm naprawy `repair_quest_schema`, weryfikacja `compile_and_verify`. Wygenerowanie pierwszej działającej serii `ash_bell` w trybie `compact` z modelem `gemma3:4b`. |
+| **Szymon Szymankiewicz** | **Interfejs tekstowy (player)** | Implementacja silnika gry w pliku `questgen/play.py` — ładowanie JSON/PDDL, generowanie menu z grounded STRIPS actions, system narracji, dialogów, konsekwencji (rany, wrogowie, opcjonalne przedmioty). Dodanie opcji `--auto` do automatycznego przechodzenia questów. Testy dla helperów playera. |
+| **Dominik Maćkowiak** | **Testy, weryfikacja i raport** | Stworzenie testów jednostkowych w katalogu `tests/` (w tym `test_output_files.py` i `test_integration.py`). Weryfikacja wszystkich wygenerowanych serii questów. Napisanie i skład raportu (`raport.md` → PDF).

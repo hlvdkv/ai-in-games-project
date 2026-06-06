@@ -1,0 +1,204 @@
+{
+  "id": "quest-3",
+  "title": "The Deep's Requiem",
+  "synopsis": "Elias, confronting his past and the sea’s fury, must choose between salvation and oblivion.",
+  "dramatic_role": "ordeal_return",
+  "start_location": "black-adit",
+  "locations": [
+    {
+      "id": "black-adit",
+      "name": "Black Adit",
+      "description": "Ash glows inside the tunnel walls, arranging itself into old faces."
+    },
+    {
+      "id": "bell-hall",
+      "name": "Bell Hall",
+      "description": "A vast bell hangs over a crack in the stone, though no tower was ever built here."
+    },
+    {
+      "id": "mine-core",
+      "name": "Mine Core",
+      "description": "The deepest chamber is silent, but the silence presses against the bones."
+    },
+    {
+      "id": "memorial-alcove",
+      "name": "Memorial Alcove",
+      "description": "Names of forgotten miners shimmer here whenever the bell heart is raised."
+    }
+  ],
+  "items": [
+    {
+      "id": "silver-knife",
+      "name": "Silver Knife",
+      "description": "The shrine blade, now darker along the edge.",
+      "location": "black-adit",
+      "portable": true
+    },
+    {
+      "id": "bell-heart",
+      "name": "Bell Heart",
+      "description": "A warm shard of metal that beats like a living heart.",
+      "location": "bell-hall",
+      "portable": true
+    },
+    {
+      "id": "memory-charm",
+      "name": "Memory Charm",
+      "description": "A charm woven from wire and soot-black thread, warm with remembered voices.",
+      "location": "memorial-alcove",
+      "portable": true,
+      "optional": true
+    }
+  ],
+  "npcs": [
+    {
+      "id": "bellkeepers-shade",
+      "name": "Bellkeeper's Shade",
+      "description": "Not an enemy, but a memory of guilt.",
+      "location": "bell-hall",
+      "dialogues": [
+        {
+          "trigger": "talk",
+          "text": "Do not break the bell. Return its heart where the earth still remembers silence."
+        }
+      ]
+    }
+  ],
+  "enemies": [
+    {
+      "id": "ash-guardian",
+      "name": "Ash Guardian",
+      "description": "Armor filled with hot dust and the anger of lost miners.",
+      "location": "bell-hall"
+    }
+  ],
+  "steps": [
+    {
+      "action": "travel",
+      "from": "black-adit",
+      "to": "bell-hall",
+      "narration": "Each step toward the hall calls up the bell's distant toll."
+    },
+    {
+      "action": "fight",
+      "enemy": "ash-guardian",
+      "location": "bell-hall",
+      "weapon": "silver-knife",
+      "narration": "The silver knife cuts through the dust, and the guardian collapses into ash."
+    },
+    {
+      "action": "talk",
+      "npc": "bellkeepers-shade",
+      "location": "bell-hall",
+      "dialogue": "Do not break the bell. Return its heart where the earth still remembers silence.",
+      "narration": "The bellkeeper's shade separates grief from rage."
+    },
+    {
+      "action": "take",
+      "item": "bell-heart",
+      "location": "bell-hall",
+      "narration": "The bell heart burns hot, but it does not harm the hero."
+    },
+    {
+      "action": "travel",
+      "from": "bell-hall",
+      "to": "mine-core",
+      "narration": "The deepest road passes through a tunnel without echoes."
+    },
+    {
+      "action": "ritual",
+      "artifact": "bell-heart",
+      "location": "mine-core",
+      "narration": "The rite of silence seals the crack, and for the first time in years the village hears true wind."
+    }
+  ],
+  "consequences": {
+    "hidden_routes": [
+      {
+        "item": "bell-heart",
+        "from": "bell-hall",
+        "to": "memorial-alcove",
+        "narration": "The bell heart answers the names in the stone, and a memorial alcove opens behind the hanging bell."
+      }
+    ]
+  },
+  "objects": [
+    {
+      "id": "black-adit",
+      "type": "location",
+      "name": "Black Adit",
+      "description": "Ash glows inside the tunnel walls, arranging itself into old faces."
+    },
+    {
+      "id": "bell-hall",
+      "type": "location",
+      "name": "Bell Hall",
+      "description": "A vast bell hangs over a crack in the stone, though no tower was ever built here."
+    },
+    {
+      "id": "mine-core",
+      "type": "location",
+      "name": "Mine Core",
+      "description": "The deepest chamber is silent, but the silence presses against the bones."
+    },
+    {
+      "id": "memorial-alcove",
+      "type": "location",
+      "name": "Memorial Alcove",
+      "description": "Names of forgotten miners shimmer here whenever the bell heart is raised."
+    },
+    {
+      "id": "silver-knife",
+      "type": "item",
+      "name": "Silver Knife",
+      "description": "The shrine blade, now darker along the edge."
+    },
+    {
+      "id": "bell-heart",
+      "type": "item",
+      "name": "Bell Heart",
+      "description": "A warm shard of metal that beats like a living heart."
+    },
+    {
+      "id": "memory-charm",
+      "type": "item",
+      "name": "Memory Charm",
+      "description": "A charm woven from wire and soot-black thread, warm with remembered voices."
+    },
+    {
+      "id": "bellkeepers-shade",
+      "type": "npc",
+      "name": "Bellkeeper's Shade",
+      "description": "Not an enemy, but a memory of guilt.",
+      "dialogues": [
+        {
+          "trigger": "talk",
+          "text": "Do not break the bell. Return its heart where the earth still remembers silence."
+        }
+      ]
+    },
+    {
+      "id": "ash-guardian",
+      "type": "enemy",
+      "name": "Ash Guardian",
+      "description": "Armor filled with hot dust and the anger of lost miners."
+    }
+  ],
+  "expected_plan": [
+    "(travel black-adit bell-hall quest-3-s0 quest-3-s1)",
+    "(fight ash-guardian bell-hall silver-knife quest-3-s1 quest-3-s2)",
+    "(talk bellkeepers-shade bell-hall quest-3-s2 quest-3-s3)",
+    "(take bell-heart bell-hall quest-3-s3 quest-3-s4)",
+    "(travel bell-hall mine-core quest-3-s4 quest-3-s5)",
+    "(ritual bell-heart mine-core quest-3-s5 quest-3-s6)"
+  ],
+  "verified_plan": [
+    "(travel black-adit bell-hall quest-3-s0 quest-3-s1)",
+    "(fight ash-guardian bell-hall silver-knife quest-3-s1 quest-3-s2)",
+    "(talk bellkeepers-shade bell-hall quest-3-s2 quest-3-s3)",
+    "(take bell-heart bell-hall quest-3-s3 quest-3-s4)",
+    "(travel bell-hall mine-core quest-3-s4 quest-3-s5)",
+    "(ritual bell-heart mine-core quest-3-s5 quest-3-s6)"
+  ],
+  "repairs": []
+}

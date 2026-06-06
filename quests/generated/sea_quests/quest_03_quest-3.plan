@@ -1,0 +1,6 @@
+(travel black-adit bell-hall quest-3-s0 quest-3-s1)
+(fight ash-guardian bell-hall silver-knife quest-3-s1 quest-3-s2)
+(talk bellkeepers-shade bell-hall quest-3-s2 quest-3-s3)
+(take bell-heart bell-hall quest-3-s3 quest-3-s4)
+(travel bell-hall mine-core quest-3-s4 quest-3-s5)
+(ritual bell-heart mine-core quest-3-s5 quest-3-s6)

@@ -1,0 +1,25 @@
+{
+  "generated_at": "2026-06-06T18:07:17",
+  "model": "gemma3:4b",
+  "used_fallback": true,
+  "generation_strategy": "fallback_template_after_planner_rejection",
+  "generation_warnings": [
+    "Generated draft rejected by planner: Quest quest-1 is not solvable after repair"
+  ],
+  "domain": "mythic_quest",
+  "quest_count": 3,
+  "files": [
+    "domain.pddl",
+    "prompt.txt",
+    "quest_01_quest-1.json",
+    "quest_01_quest-1.pddl",
+    "quest_01_quest-1.plan",
+    "quest_02_quest-2.json",
+    "quest_02_quest-2.pddl",
+    "quest_02_quest-2.plan",
+    "quest_03_quest-3.json",
+    "quest_03_quest-3.pddl",
+    "quest_03_quest-3.plan",
+    "series.json"
+  ]
+}

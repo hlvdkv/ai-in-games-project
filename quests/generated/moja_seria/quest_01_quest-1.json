@@ -1,0 +1,183 @@
+{
+  "id": "quest-1",
+  "title": "The Silent Pages",
+  "synopsis": "Kaelen discovers the library and its dangerous power.",
+  "dramatic_role": "call",
+  "start_location": "heatherfall",
+  "locations": [
+    {
+      "id": "heatherfall",
+      "name": "Heatherfall",
+      "description": "Low fog hangs over the roofs, and the villagers speak more softly than usual."
+    },
+    {
+      "id": "old-well",
+      "name": "Old Well",
+      "description": "The stone ring of the well trembles as if someone below is striking metal."
+    },
+    {
+      "id": "ancestor-shrine",
+      "name": "Ancestor Shrine",
+      "description": "The shrine walls carry the carved names of those who once sealed the mine."
+    },
+    {
+      "id": "root-chapel",
+      "name": "Root Chapel",
+      "description": "A small chapel under the roots, where miners once left offerings before descending."
+    }
+  ],
+  "items": [
+    {
+      "id": "rusted-medallion",
+      "name": "Rusted Medallion",
+      "description": "The mark of the first bellkeeper, cold even in a warm hand.",
+      "location": "old-well",
+      "portable": true
+    },
+    {
+      "id": "silver-knife",
+      "name": "Silver Knife",
+      "description": "A plain blade for cutting shadows, hidden in the shrine.",
+      "location": "ancestor-shrine",
+      "portable": true
+    },
+    {
+      "id": "healing-salve",
+      "name": "Healing Salve",
+      "description": "A miner's salve made from pale moss and ash-salt. It can close a fresh wound.",
+      "location": "root-chapel",
+      "portable": true,
+      "optional": true,
+      "healing": true
+    }
+  ],
+  "npcs": [
+    {
+      "id": "elder-mira",
+      "name": "Elder Mira",
+      "description": "The last villager who remembers the night the bell fell silent.",
+      "location": "heatherfall",
+      "dialogues": [
+        {
+          "trigger": "talk",
+          "text": "If the well sings with ash, seek the bellkeeper's medallion."
+        }
+      ]
+    }
+  ],
+  "enemies": [],
+  "steps": [
+    {
+      "action": "talk",
+      "npc": "elder-mira",
+      "location": "heatherfall",
+      "dialogue": "If the well sings with ash, seek the bellkeeper's medallion.",
+      "narration": "Mira recognizes the hero and points toward the first wound in the earth."
+    },
+    {
+      "action": "travel",
+      "from": "heatherfall",
+      "to": "old-well",
+      "narration": "The path to the well is overgrown with pale heather."
+    },
+    {
+      "action": "take",
+      "item": "rusted-medallion",
+      "location": "old-well",
+      "narration": "The medallion loosens from the wet stone and falls silent in the hero's hand."
+    },
+    {
+      "action": "travel",
+      "from": "old-well",
+      "to": "ancestor-shrine",
+      "narration": "A trail of ash leads toward the shrine."
+    },
+    {
+      "action": "take",
+      "item": "silver-knife",
+      "location": "ancestor-shrine",
+      "narration": "The blade answers the medallion with a clean flash of light."
+    }
+  ],
+  "consequences": {
+    "hidden_routes": [
+      {
+        "item": "rusted-medallion",
+        "from": "old-well",
+        "to": "root-chapel",
+        "narration": "The medallion warms in the hero's hand, and roots pull aside to reveal a narrow chapel path."
+      }
+    ]
+  },
+  "objects": [
+    {
+      "id": "heatherfall",
+      "type": "location",
+      "name": "Heatherfall",
+      "description": "Low fog hangs over the roofs, and the villagers speak more softly than usual."
+    },
+    {
+      "id": "old-well",
+      "type": "location",
+      "name": "Old Well",
+      "description": "The stone ring of the well trembles as if someone below is striking metal."
+    },
+    {
+      "id": "ancestor-shrine",
+      "type": "location",
+      "name": "Ancestor Shrine",
+      "description": "The shrine walls carry the carved names of those who once sealed the mine."
+    },
+    {
+      "id": "root-chapel",
+      "type": "location",
+      "name": "Root Chapel",
+      "description": "A small chapel under the roots, where miners once left offerings before descending."
+    },
+    {
+      "id": "rusted-medallion",
+      "type": "item",
+      "name": "Rusted Medallion",
+      "description": "The mark of the first bellkeeper, cold even in a warm hand."
+    },
+    {
+      "id": "silver-knife",
+      "type": "item",
+      "name": "Silver Knife",
+      "description": "A plain blade for cutting shadows, hidden in the shrine."
+    },
+    {
+      "id": "healing-salve",
+      "type": "item",
+      "name": "Healing Salve",
+      "description": "A miner's salve made from pale moss and ash-salt. It can close a fresh wound."
+    },
+    {
+      "id": "elder-mira",
+      "type": "npc",
+      "name": "Elder Mira",
+      "description": "The last villager who remembers the night the bell fell silent.",
+      "dialogues": [
+        {
+          "trigger": "talk",
+          "text": "If the well sings with ash, seek the bellkeeper's medallion."
+        }
+      ]
+    }
+  ],
+  "expected_plan": [
+    "(talk elder-mira heatherfall quest-1-s0 quest-1-s1)",
+    "(travel heatherfall old-well quest-1-s1 quest-1-s2)",
+    "(take rusted-medallion old-well quest-1-s2 quest-1-s3)",
+    "(travel old-well ancestor-shrine quest-1-s3 quest-1-s4)",
+    "(take silver-knife ancestor-shrine quest-1-s4 quest-1-s5)"
+  ],
+  "verified_plan": [
+    "(talk elder-mira heatherfall quest-1-s0 quest-1-s1)",
+    "(travel heatherfall old-well quest-1-s1 quest-1-s2)",
+    "(take rusted-medallion old-well quest-1-s2 quest-1-s3)",
+    "(travel old-well ancestor-shrine quest-1-s3 quest-1-s4)",
+    "(take silver-knife ancestor-shrine quest-1-s4 quest-1-s5)"
+  ],
+  "repairs": []
+}
